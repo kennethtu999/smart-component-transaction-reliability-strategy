@@ -1,0 +1,98 @@
+@startuml
+
+package "pov.secure" {
+  class SafeServiceTest {
+    - safeAcctService: SafeAcctService
+    - safeSecurityService: SafeSecurityService
+    - safeAgreementService: SafeAgreementService
+    - txService: MtwTx001TxService
+    - txSafeCache: TxSafeCache
+    + validateSafeDataAfterGet()
+  }
+
+  class TxSafeCache {
+    - safeDataEntryList: List<ISafeDataEntry>
+    + addSafeDataEntry(ISafeDataEntry)
+    + validate(ITxDoc)
+  }
+
+  interface ISafeDataEntry {
+    + getDataAccessor(): String
+    + isValid(Object): void
+  }
+
+  interface ITxDoc {
+  }
+
+  interface ITxService<T extends ITxDoc> {
+    + doTransaction(T): void
+  }
+}
+
+package "pov.secure.SafeServiceTestAccount" {
+  class SafeAcctService {
+    - acctService: AcctService
+    + getSafeAcctList(): SafeAcctListEntry<AcctData>
+  }
+
+  class SafeAcctListEntry<T> {
+    - acctDataList: List<AcctData>
+    + getDataAccessor(): String
+    + isValid(Object): void
+  }
+}
+
+package "pov.secure.SafeServiceTestSecurity" {
+  class SafeSecurityService {
+    - svc: SecurityService
+    + getList(): SafeSecurityListEntry<SecurityData>
+  }
+
+  class SafeSecurityListEntry<T> {
+    - securityDataList: List<SecurityData>
+    + getDataAccessor(): String
+    + isValid(Object): void
+  }
+}
+
+package "pov.secure.SafeServiceTestAgreement" {
+  class SafeAgreementService {
+    - svc: AgreementService
+    + getList(): SafeAgreementListEntry<AgreementData>
+  }
+
+  class SafeAgreementListEntry<T> {
+    - AgreementDataList: List<AgreementData>
+    + getDataAccessor(): String
+    + isValid(Object): void
+  }
+}
+
+package "pov.secure.SafeServiceTestTxn" {
+  class MtwTx001TxDoc {
+    - acctNo: String
+    - securityType: String
+    - agreementTypes: String
+  }
+
+  class MtwTx001TxService {
+    + doTransaction(MtwTx001TxDoc): void
+  }
+}
+
+SafeServiceTest --> SafeAcctService
+SafeServiceTest --> SafeSecurityService
+SafeServiceTest --> SafeAgreementService
+SafeServiceTest --> MtwTx001TxService
+SafeServiceTest --> TxSafeCache
+
+TxSafeCache --> ISafeDataEntry
+
+SafeAcctListEntry ..|> ISafeDataEntry
+SafeSecurityListEntry ..|> ISafeDataEntry
+SafeAgreementListEntry ..|> ISafeDataEntry
+
+MtwTx001TxDoc ..|> ITxDoc
+MtwTx001TxService ..|> ITxService
+
+@enduml
