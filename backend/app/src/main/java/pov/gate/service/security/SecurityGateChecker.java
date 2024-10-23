@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import pov.gate.core.IGateDataEntity;
-import pov.gate.core.SafeException;
+import pov.gate.core.GateException;
 import pov.gate.model.SecurityData;
 
 public class SecurityGateChecker<T> extends ArrayList<T> implements IGateDataEntity {
@@ -21,12 +21,12 @@ public class SecurityGateChecker<T> extends ArrayList<T> implements IGateDataEnt
     }
 
     @Override
-    public void isValid(Object data) throws SafeException {
+    public void isValid(Object data) throws GateException {
         if (data == null) {
-            throw new SafeException("Security data is null");
+            throw new GateException("Security data is null");
         }
         if (securityDataList == null || securityDataList.isEmpty()) {
-            throw new SafeException("Security data is empty");
+            throw new GateException("Security data is empty");
         }
 
         Optional<SecurityData> securityDataOpt = securityDataList.stream()
@@ -35,7 +35,7 @@ public class SecurityGateChecker<T> extends ArrayList<T> implements IGateDataEnt
         if (securityDataOpt.isPresent()) {
             System.out.println("Security data found: " + securityDataOpt.get().getSecurityName());
         } else {
-            throw new SafeException("Security data not found");
+            throw new GateException("Security data not found");
         }
     }
 }

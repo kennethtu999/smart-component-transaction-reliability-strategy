@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import pov.gate.cache.GateCache;
 import pov.gate.core.ITxDoc;
-import pov.gate.core.SafeException;
+import pov.gate.core.GateException;
 
 @Aspect
 @Component
@@ -26,11 +26,11 @@ public class DataCheckAspect {
         return joinPoint.proceed();
     }
 
-    private void isValidTxDoc(ITxDoc txDoc) throws SafeException {
+    private void isValidTxDoc(ITxDoc txDoc) throws GateException {
         try {
             txSafeCache.validate(txDoc.getTxnToken(), txDoc);
-        } catch (SafeException e) {
-            throw new SafeException("Invalid transaction document: " + e.getMessage());
+        } catch (GateException e) {
+            throw new GateException("Invalid transaction document: " + e.getMessage());
         }
     }
 }

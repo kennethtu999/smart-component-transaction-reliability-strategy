@@ -3,17 +3,21 @@ package pov.biz.txn;
 import org.springframework.stereotype.Service;
 
 import pov.gate.core.AbstractTxService;
+import pov.gate.core.GateException;
 
 @Service
 public class Mtwtx001TxService extends AbstractTxService<Mtwtx001Doc> {
 
     /**
      * Create a new transaction document
+     * 
+     * @throws GateException
      */
     @Override
-    public Mtwtx001Doc createTransaction() {
+    public Mtwtx001Doc createTransaction() throws GateException {
         Mtwtx001Doc doc = new Mtwtx001Doc();
-        doc.setTxnToken(generateTxnToken());
+        doc.setTxnToken(activateTxnToken());
+
         return doc;
     }
 

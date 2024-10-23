@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import pov.gate.core.IGateDataEntity;
-import pov.gate.core.SafeException;
+import pov.gate.core.GateException;
 import pov.gate.model.AgreementData;
 
 public class AgreementGateChecker<T> extends ArrayList<T> implements IGateDataEntity {
@@ -21,12 +21,12 @@ public class AgreementGateChecker<T> extends ArrayList<T> implements IGateDataEn
     }
 
     @Override
-    public void isValid(Object data) throws SafeException {
+    public void isValid(Object data) throws GateException {
         if (data == null) {
-            throw new SafeException("Agreement data is null");
+            throw new GateException("Agreement data is null");
         }
         if (agreementDataList == null || agreementDataList.isEmpty()) {
-            throw new SafeException("Agreement data is empty");
+            throw new GateException("Agreement data is empty");
         }
 
         String allAgreementTypes = agreementDataList.stream()
@@ -34,7 +34,7 @@ public class AgreementGateChecker<T> extends ArrayList<T> implements IGateDataEn
                 .collect(Collectors.joining(","));
 
         if (!allAgreementTypes.equals(data)) {
-            throw new SafeException("Agreement data not all granted");
+            throw new GateException("Agreement data not all granted");
         }
 
         System.out.println("Agreement data validated successfully");

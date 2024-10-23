@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pov.gate.core.IGateDataEntity;
-import pov.gate.core.SafeException;
+import pov.gate.core.GateException;
 import pov.gate.model.AcctData;
 
 public class AccountGateChecker<T> extends ArrayList<T> implements IGateDataEntity {
@@ -20,17 +20,17 @@ public class AccountGateChecker<T> extends ArrayList<T> implements IGateDataEnti
     }
 
     @Override
-    public void isValid(Object data) throws SafeException {
+    public void isValid(Object data) throws GateException {
         if (data == null) {
-            throw new SafeException("Acct data is null");
+            throw new GateException("Acct data is null");
         }
         if (acctDataList == null || acctDataList.isEmpty()) {
-            throw new SafeException("Acct data is empty");
+            throw new GateException("Acct data is empty");
         }
 
         acctDataList.stream()
                 .filter(acctData -> data.equals(acctData.getAcctNo()))
                 .findFirst()
-                .orElseThrow(() -> new SafeException("Acct data not found"));
+                .orElseThrow(() -> new GateException("Acct data not found"));
     }
 }

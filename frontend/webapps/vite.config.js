@@ -17,22 +17,25 @@ export default ({ mode }) => {
       svgLoader(),
       vue(),
       autoImport({
-        imports: [
-          'vue',
-          'vue-router',
-        ],
+        imports: ['vue', 'vue-router'],
         eslintrc: {
           enabled: true,
         },
-        dirs: [
-          './src/components',
-          './src/composables',
-        ],
+        dirs: ['./src/components', './src/composables'],
       }),
     ],
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
+      },
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:8080',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '/api'),
+        },
       },
     },
   });

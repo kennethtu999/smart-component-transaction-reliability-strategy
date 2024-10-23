@@ -13,7 +13,7 @@ import pov.biz.service.SafeSecurityService;
 import pov.biz.txn.Mtwtx001Doc;
 import pov.biz.txn.Mtwtx001TxService;
 import pov.gate.cache.GateCache;
-import pov.gate.core.SafeException;
+import pov.gate.core.GateException;
 import pov.gate.model.AcctData;
 import pov.gate.model.AgreementData;
 import pov.gate.model.SecurityData;
@@ -41,7 +41,7 @@ public class ServiceGateTest {
     private Mtwtx001TxService txService;
 
     @Autowired
-    private GateCache txSafeCache;
+    private GateCache gateCache;
 
     /**
      * Test method to validate safe data after getting it
@@ -61,13 +61,13 @@ public class ServiceGateTest {
             // 使用微前端時會取得資料再寫入暫存區
             // PAGE 1～N
             AccountGateChecker<AcctData> safeAcctListEntry = safeAcctService.getSafeAcctList();
-            txSafeCache.addGateData(txDoc.getTxnToken(), safeAcctListEntry);
+            gateCache.addGateData(txDoc.getTxnToken(), safeAcctListEntry);
 
             SecurityGateChecker<SecurityData> safeSecurityListEntry = safeSecurityService.getList();
-            txSafeCache.addGateData(txDoc.getTxnToken(), safeSecurityListEntry);
+            gateCache.addGateData(txDoc.getTxnToken(), safeSecurityListEntry);
 
             AgreementGateChecker<AgreementData> safeAgreementListEntry = safeAgreementService.getList();
-            txSafeCache.addGateData(txDoc.getTxnToken(), safeAgreementListEntry);
+            gateCache.addGateData(txDoc.getTxnToken(), safeAgreementListEntry);
 
             // 更新交易資料
             // PAGE 1～N
@@ -80,9 +80,9 @@ public class ServiceGateTest {
             txService.doTransaction(txDoc);
         } catch (Throwable e) {
             if (expectedException) {
-                Assertions.assertEquals(SafeException.class, e.getCause().getClass());
+                Assertions.assertEquals(GateException.class, e.getCause().getClass());
             } else {
-                throw e.getCause();
+                throw e.getCause() == null ? e : e.getCause();
             }
         }
     }
