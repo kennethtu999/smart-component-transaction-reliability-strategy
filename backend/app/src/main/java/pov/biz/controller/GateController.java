@@ -14,8 +14,12 @@ import pov.gate.service.account.AccountGate;
 import pov.gate.service.agreement.AgreementGate;
 import pov.gate.service.security.SecurityGete;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/gate")
+@Tag(name = "Gate Controller", description = "API endpoints for gate operations")
 public class GateController {
 
     @Autowired
@@ -28,16 +32,19 @@ public class GateController {
     private AccountGate acctGate;
 
     @GetMapping("/security")
+    @Operation(summary = "Get security list", description = "Retrieves a list of security data")
     public List<SecurityData> getSecurityList() {
         return securityGete.getList();
     }
 
     @GetMapping("/agreements")
+    @Operation(summary = "Get agreement list", description = "Retrieves a list of agreement data")
     public List<AgreementData> getAgreementList() {
         return agreementGate.getList();
     }
 
     @GetMapping("/accounts")
+    @Operation(summary = "Get safe account list", description = "Retrieves a list of safe account data")
     public List<AcctData> getSafeAcctList() {
         return acctGate.getSafeAcctList();
     }

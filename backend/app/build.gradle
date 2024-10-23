@@ -29,6 +29,7 @@ dependencies {
 
     // Add Spring Boot dependencies
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'  // Add Spring MVC support
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // Add AspectJ dependency
@@ -40,6 +41,9 @@ dependencies {
     
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // Add Swagger dependencies
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -51,7 +55,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'org.example.App'
+    mainClass = 'pov.biz.SafeApplication'  // Updated to match the main class in the context
 }
 
 tasks.named('test') {
