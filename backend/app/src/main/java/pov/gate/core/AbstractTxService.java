@@ -7,7 +7,7 @@ public abstract class AbstractTxService<T extends ITxDoc> {
 
     public abstract void doTransaction(T txDoc);
 
-    protected String generateTxId() {
+    protected String generateTxnToken() {
         return "TX" + new SecureRandom().nextInt(1000000);
     }
 }

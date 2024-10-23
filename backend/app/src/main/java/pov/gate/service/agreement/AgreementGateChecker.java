@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import pov.gate.core.ISafeDataEntry;
+import pov.gate.core.IGateDataEntity;
 import pov.gate.core.SafeException;
 import pov.gate.model.AgreementData;
 
-public class AgreementGateChecker<T> extends ArrayList<T> implements ISafeDataEntry {
+public class AgreementGateChecker<T> extends ArrayList<T> implements IGateDataEntity {
     public List<AgreementData> agreementDataList;
 
     public AgreementGateChecker(List<AgreementData> agreementDataList) {

@@ -3,11 +3,11 @@ package pov.gate.service.account;
 import java.util.ArrayList;
 import java.util.List;
 
-import pov.gate.core.ISafeDataEntry;
+import pov.gate.core.IGateDataEntity;
 import pov.gate.core.SafeException;
 import pov.gate.model.AcctData;
 
-public class AccountGateChecker<T> extends ArrayList<T> implements ISafeDataEntry {
+public class AccountGateChecker<T> extends ArrayList<T> implements IGateDataEntity {
     public List<AcctData> acctDataList;
 
     public AccountGateChecker(List<AcctData> acctDataList) {

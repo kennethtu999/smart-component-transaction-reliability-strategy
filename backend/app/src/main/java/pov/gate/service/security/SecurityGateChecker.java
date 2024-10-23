@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import pov.gate.core.ISafeDataEntry;
+import pov.gate.core.IGateDataEntity;
 import pov.gate.core.SafeException;
 import pov.gate.model.SecurityData;
 
-public class SecurityGateChecker<T> extends ArrayList<T> implements ISafeDataEntry {
+public class SecurityGateChecker<T> extends ArrayList<T> implements IGateDataEntity {
     public List<SecurityData> securityDataList;
 
     public SecurityGateChecker(List<SecurityData> securityDataList) {

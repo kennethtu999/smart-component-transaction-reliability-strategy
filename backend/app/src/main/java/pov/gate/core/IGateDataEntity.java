@@ -1,6 +1,6 @@
 package pov.gate.core;
 
-public interface ISafeDataEntry {
+public interface IGateDataEntity {
     String getDataAccessor();
 
     void isValid(Object data) throws SafeException;

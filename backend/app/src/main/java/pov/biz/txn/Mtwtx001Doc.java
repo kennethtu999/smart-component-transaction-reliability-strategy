@@ -9,7 +9,7 @@ import pov.gate.service.security.ISecurityGateAccessor;
 @Data
 public class Mtwtx001Doc implements ITxDoc, IAccountGateAccessor, ISecurityGateAccessor,
         IAgreementGateAccessor {
-    private String txId;
+    private String txnToken;
     private String acctNo;
     private String securityType;
     private String agreementTypes;

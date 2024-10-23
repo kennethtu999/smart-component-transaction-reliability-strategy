@@ -6,7 +6,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import pov.gate.cache.TxSafeCache;
+import pov.gate.cache.GateCache;
 import pov.gate.core.ITxDoc;
 import pov.gate.core.SafeException;
 
@@ -14,7 +14,7 @@ import pov.gate.core.SafeException;
 @Component
 public class DataCheckAspect {
     @Autowired
-    private TxSafeCache txSafeCache;
+    private GateCache txSafeCache;
 
     @Around("execution(* pov.gate.core.AbstractTxService+.doTransaction(..))")
     public Object dataCheckAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -28,7 +28,7 @@ public class DataCheckAspect {
 
     private void isValidTxDoc(ITxDoc txDoc) throws SafeException {
         try {
-            txSafeCache.validate(txDoc);
+            txSafeCache.validate(txDoc.getTxnToken(), txDoc);
         } catch (SafeException e) {
             throw new SafeException("Invalid transaction document: " + e.getMessage());
         }

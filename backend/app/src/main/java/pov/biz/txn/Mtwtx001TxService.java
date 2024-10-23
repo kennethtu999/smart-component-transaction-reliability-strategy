@@ -13,7 +13,7 @@ public class Mtwtx001TxService extends AbstractTxService<Mtwtx001Doc> {
     @Override
     public Mtwtx001Doc createTransaction() {
         Mtwtx001Doc doc = new Mtwtx001Doc();
-        doc.setTxId(generateTxId());
+        doc.setTxnToken(generateTxnToken());
         return doc;
     }
 

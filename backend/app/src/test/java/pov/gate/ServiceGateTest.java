@@ -19,7 +19,7 @@ import pov.biz.service.SafeSecurityService;
 import pov.biz.txn.Mtwtx001Doc;
 import pov.biz.txn.Mtwtx001TxService;
 import pov.gate.aspect.DataCheckAspect;
-import pov.gate.cache.TxSafeCache;
+import pov.gate.cache.GateCache;
 import pov.gate.core.SafeException;
 import pov.gate.model.AcctData;
 import pov.gate.model.AgreementData;
@@ -49,7 +49,7 @@ public class ServiceGateTest {
     private Mtwtx001TxService txService;
 
     @Autowired
-    private TxSafeCache txSafeCache;
+    private GateCache txSafeCache;
 
     /**
      * Test configuration
@@ -98,8 +98,8 @@ public class ServiceGateTest {
         }
 
         @Bean
-        public TxSafeCache txSafeCache() {
-            return new TxSafeCache();
+        public GateCache txSafeCache() {
+            return new GateCache();
         }
     }
 
@@ -114,23 +114,29 @@ public class ServiceGateTest {
     public void validateSafeDataAfterGet(String testName, String acctNo, String securityType, String agreementTypes,
             Boolean expectedException) throws Throwable {
         try {
-            // get data
+            // 建立交易使用的TXN TOKEN
+            // PAGE 1
+            Mtwtx001Doc txDoc = txService.createTransaction();
+
+            // 使用微前端時會取得資料再寫入暫存區
+            // PAGE 1～N
             AccountGateChecker<AcctData> safeAcctListEntry = safeAcctService.getSafeAcctList();
-            txSafeCache.addSafeDataEntry(safeAcctListEntry);
+            txSafeCache.addGateData(txDoc.getTxnToken(), safeAcctListEntry);
 
             SecurityGateChecker<SecurityData> safeSecurityListEntry = safeSecurityService.getList();
-            txSafeCache.addSafeDataEntry(safeSecurityListEntry);
+            txSafeCache.addGateData(txDoc.getTxnToken(), safeSecurityListEntry);
 
             AgreementGateChecker<AgreementData> safeAgreementListEntry = safeAgreementService.getList();
-            txSafeCache.addSafeDataEntry(safeAgreementListEntry);
+            txSafeCache.addGateData(txDoc.getTxnToken(), safeAgreementListEntry);
 
-            // create tx doc
-            Mtwtx001Doc txDoc = txService.createTransaction();
+            // 更新交易資料
+            // PAGE 1～N
             txDoc.setAcctNo(acctNo);
             txDoc.setSecurityType(securityType);
             txDoc.setAgreementTypes(agreementTypes);
 
-            // do service
+            // 執行交易
+            // PAGE CONFIRM
             txService.doTransaction(txDoc);
         } catch (Throwable e) {
             if (expectedException) {
