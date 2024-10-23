@@ -4,34 +4,26 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 
-import pov.biz.service.AcctService;
-import pov.biz.service.AgreementService;
+import pov.biz.DemoApplication;
 import pov.biz.service.SafeSecurityService;
 import pov.biz.txn.Mtwtx001Doc;
 import pov.biz.txn.Mtwtx001TxService;
-import pov.gate.aspect.DataCheckAspect;
 import pov.gate.cache.GateCache;
 import pov.gate.core.SafeException;
 import pov.gate.model.AcctData;
 import pov.gate.model.AgreementData;
 import pov.gate.model.SecurityData;
-import pov.gate.service.account.AccountGateChecker;
 import pov.gate.service.account.AccountGate;
-import pov.gate.service.agreement.AgreementGateChecker;
+import pov.gate.service.account.AccountGateChecker;
 import pov.gate.service.agreement.AgreementGate;
+import pov.gate.service.agreement.AgreementGateChecker;
 import pov.gate.service.security.SecurityGateChecker;
-import pov.gate.service.security.SecurityGete;
 
-@SpringBootTest(classes = ServiceGateTest.Config.class)
+@SpringBootTest(classes = DemoApplication.class)
 @ComponentScan(basePackages = "pov.secure")
 @ActiveProfiles("dummy")
 public class ServiceGateTest {
@@ -50,58 +42,6 @@ public class ServiceGateTest {
 
     @Autowired
     private GateCache txSafeCache;
-
-    /**
-     * Test configuration
-     */
-    @Configuration
-    @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
-    static class Config {
-        @Bean
-        public AcctService acctService() {
-            return new AcctService();
-        }
-
-        @Bean
-        public AccountGate safeAcctService(AcctService acctService) {
-            return new AccountGate(acctService);
-        }
-
-        @Bean
-        public SecurityGete securityService() {
-            return new SecurityGete();
-        }
-
-        @Bean
-        public SafeSecurityService safeSecurityService(SecurityGete securityService) {
-            return new SafeSecurityService(securityService);
-        }
-
-        @Bean
-        public AgreementService agreementService() {
-            return new AgreementService();
-        }
-
-        @Bean
-        public AgreementGate safeAgreementService(AgreementService agreementService) {
-            return new AgreementGate(agreementService);
-        }
-
-        @Bean
-        public Mtwtx001TxService mtwtx001TxService() {
-            return new Mtwtx001TxService();
-        }
-
-        @Bean
-        public DataCheckAspect dataCheckAspect() {
-            return new DataCheckAspect();
-        }
-
-        @Bean
-        public GateCache txSafeCache() {
-            return new GateCache();
-        }
-    }
 
     /**
      * Test method to validate safe data after getting it
