@@ -1,10 +1,10 @@
-package pov.gate.service.account;
+package pov.channel.gateservice.account;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import pov.biz.service.AcctService;
+import pov.business.service.AcctService;
 import pov.gate.model.AcctData;
 
 @Component

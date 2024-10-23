@@ -55,7 +55,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'pov.biz.DemoApplication'  // Updated to match the main class in the context
+    mainClass = 'pov.channel.DemoApplication'  // Updated to match the main class in the context
 }
 
 tasks.named('test') {

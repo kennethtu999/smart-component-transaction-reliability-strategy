@@ -1,4 +1,4 @@
-package pov.gate.service.agreement;
+package pov.channel.gateservice.agreement;
 
 public interface IAgreementGateAccessor {
     public static final String ACCESSOR = "getAgreementTypes";

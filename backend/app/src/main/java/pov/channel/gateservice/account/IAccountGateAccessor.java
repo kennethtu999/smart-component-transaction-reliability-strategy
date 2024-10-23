@@ -1,4 +1,4 @@
-package pov.gate.service.account;
+package pov.channel.gateservice.account;
 
 public interface IAccountGateAccessor {
     public static final String ACCESSOR = "getAcctNo";

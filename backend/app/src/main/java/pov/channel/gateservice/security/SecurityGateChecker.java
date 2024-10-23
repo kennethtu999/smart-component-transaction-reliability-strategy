@@ -1,4 +1,4 @@
-package pov.gate.service.security;
+package pov.channel.gateservice.security;
 
 import java.util.ArrayList;
 import java.util.List;

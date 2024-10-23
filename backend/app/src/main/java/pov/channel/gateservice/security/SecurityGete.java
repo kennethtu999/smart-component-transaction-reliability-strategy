@@ -1,4 +1,4 @@
-package pov.gate.service.security;
+package pov.channel.gateservice.security;
 
 import org.springframework.stereotype.Component;
 

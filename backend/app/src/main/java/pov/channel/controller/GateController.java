@@ -1,4 +1,4 @@
-package pov.biz.controller;
+package pov.channel.controller;
 
 import java.util.List;
 
@@ -7,13 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pov.channel.gateservice.account.AccountGate;
+import pov.channel.gateservice.agreement.AgreementGate;
+import pov.channel.gateservice.security.SecurityGete;
 import pov.gate.model.AcctData;
 import pov.gate.model.AgreementData;
 import pov.gate.model.SecurityData;
-import pov.gate.service.account.AccountGate;
-import pov.gate.service.agreement.AgreementGate;
-import pov.gate.service.security.SecurityGete;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 

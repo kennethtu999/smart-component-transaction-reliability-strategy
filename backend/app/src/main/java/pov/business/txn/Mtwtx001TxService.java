@@ -1,4 +1,4 @@
-package pov.biz.txn;
+package pov.business.txn;
 
 import org.springframework.stereotype.Service;
 

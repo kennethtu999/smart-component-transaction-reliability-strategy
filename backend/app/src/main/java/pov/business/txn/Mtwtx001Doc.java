@@ -1,10 +1,10 @@
-package pov.biz.txn;
+package pov.business.txn;
 
 import lombok.Data;
+import pov.channel.gateservice.account.IAccountGateAccessor;
+import pov.channel.gateservice.agreement.IAgreementGateAccessor;
+import pov.channel.gateservice.security.ISecurityGateAccessor;
 import pov.gate.core.ITxDoc;
-import pov.gate.service.account.IAccountGateAccessor;
-import pov.gate.service.agreement.IAgreementGateAccessor;
-import pov.gate.service.security.ISecurityGateAccessor;
 
 @Data
 public class Mtwtx001Doc implements ITxDoc, IAccountGateAccessor, ISecurityGateAccessor,

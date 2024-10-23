@@ -1,4 +1,4 @@
-package pov.biz.service;
+package pov.business.service;
 
 import org.springframework.stereotype.Component;
 

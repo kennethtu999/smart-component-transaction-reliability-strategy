@@ -1,4 +1,4 @@
-package pov.gate.service.account;
+package pov.channel.gateservice.account;
 
 import java.util.ArrayList;
 import java.util.List;

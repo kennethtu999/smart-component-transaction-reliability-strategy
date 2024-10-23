@@ -1,10 +1,10 @@
-package pov.gate.service.agreement;
+package pov.channel.gateservice.agreement;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import pov.biz.service.AgreementService;
+import pov.business.service.AgreementService;
 import pov.gate.model.AgreementData;
 
 @Component

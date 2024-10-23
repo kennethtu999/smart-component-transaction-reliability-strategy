@@ -8,20 +8,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
-import pov.biz.DemoApplication;
-import pov.biz.service.SafeSecurityService;
-import pov.biz.txn.Mtwtx001Doc;
-import pov.biz.txn.Mtwtx001TxService;
+import pov.business.service.TxnSecurityService;
+import pov.business.txn.Mtwtx001Doc;
+import pov.business.txn.Mtwtx001TxService;
+import pov.channel.DemoApplication;
+import pov.channel.gateservice.account.AccountGate;
+import pov.channel.gateservice.account.AccountGateChecker;
+import pov.channel.gateservice.agreement.AgreementGate;
+import pov.channel.gateservice.agreement.AgreementGateChecker;
+import pov.channel.gateservice.security.SecurityGateChecker;
 import pov.gate.cache.GateCache;
 import pov.gate.core.GateException;
 import pov.gate.model.AcctData;
 import pov.gate.model.AgreementData;
 import pov.gate.model.SecurityData;
-import pov.gate.service.account.AccountGate;
-import pov.gate.service.account.AccountGateChecker;
-import pov.gate.service.agreement.AgreementGate;
-import pov.gate.service.agreement.AgreementGateChecker;
-import pov.gate.service.security.SecurityGateChecker;
 
 @SpringBootTest(classes = DemoApplication.class)
 @ComponentScan(basePackages = "pov.secure")
@@ -32,7 +32,7 @@ public class ServiceGateTest {
     private AccountGate safeAcctService;
 
     @Autowired
-    private SafeSecurityService safeSecurityService;
+    private TxnSecurityService safeSecurityService;
 
     @Autowired
     private AgreementGate safeAgreementService;

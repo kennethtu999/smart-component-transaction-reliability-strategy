@@ -1,4 +1,4 @@
-package pov.gate.service.agreement;
+package pov.channel.gateservice.agreement;
 
 import java.util.ArrayList;
 import java.util.List;

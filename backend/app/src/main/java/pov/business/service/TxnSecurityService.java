@@ -1,18 +1,18 @@
-package pov.biz.service;
+package pov.business.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import pov.channel.gateservice.security.SecurityGateChecker;
+import pov.channel.gateservice.security.SecurityGete;
 import pov.gate.model.SecurityData;
-import pov.gate.service.security.SecurityGateChecker;
-import pov.gate.service.security.SecurityGete;
 
 @Component
-public class SafeSecurityService {
+public class TxnSecurityService {
     private SecurityGete securityService;
 
-    public SafeSecurityService(SecurityGete securityService) {
+    public TxnSecurityService(SecurityGete securityService) {
         this.securityService = securityService;
     }
 
