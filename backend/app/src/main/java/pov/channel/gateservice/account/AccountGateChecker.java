@@ -5,13 +5,17 @@ import java.util.List;
 
 import pov.gate.core.IGateDataEntity;
 import pov.gate.core.GateException;
-import pov.gate.model.AcctData;
+import pov.gate.model.AccountData;
 
 public class AccountGateChecker<T> extends ArrayList<T> implements IGateDataEntity {
-    public List<AcctData> acctDataList;
+    private List<AccountData> acctDataList;
 
-    public AccountGateChecker(List<AcctData> acctDataList) {
+    public AccountGateChecker(List<AccountData> acctDataList) {
         this.acctDataList = acctDataList;
+    }
+
+    public List<AccountData> getData() {
+        return acctDataList;
     }
 
     @Override

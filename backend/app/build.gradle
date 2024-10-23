@@ -44,6 +44,9 @@ dependencies {
 
     // Add Swagger dependencies
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+    // Add Spring Boot DevTools for automatic reloading
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

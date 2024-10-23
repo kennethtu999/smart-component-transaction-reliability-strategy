@@ -3,10 +3,28 @@
     "tasks": [
         {
             "type": "shell",
+            "label": "Compile Backend APP",
+            "command": "./gradlew",
+            "args": [
+                "app:compileJava"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
             "label": "Start Backend",
             "command": "./gradlew",
             "args": [
-                "bootRun"
+                "bootRun",
+                "--args='--spring.profiles.active=dev'"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

@@ -15,6 +15,10 @@ public class SecurityGateChecker<T> extends ArrayList<T> implements IGateDataEnt
         this.securityDataList = securityDataList;
     }
 
+    public List<SecurityData> getData() {
+        return securityDataList;
+    }
+
     @Override
     public String getDataAccessor() {
         return "getSecurityType";

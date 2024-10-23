@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    pov: DEBUG
+# Add other dev-specific configurations here

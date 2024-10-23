@@ -20,7 +20,7 @@ public class Txn001Controller {
     private GateCache gateCache;
 
     @GetMapping("/init")
-    @Operation(summary = "Get security list", description = "Retrieves a list of security data")
+    @Operation(summary = "init txn001 yyy", description = "init txn001 yyy")
     public void init(@RequestParam("txntoken") String txntoken) throws GateException {
         gateCache.activate(txntoken);
     }

@@ -15,6 +15,10 @@ public class AgreementGateChecker<T> extends ArrayList<T> implements IGateDataEn
         this.agreementDataList = agreementDataList;
     }
 
+    public List<AgreementData> getData() {
+        return agreementDataList;
+    }
+
     @Override
     public String getDataAccessor() {
         return "getAgreementTypes";

@@ -1,5 +1,7 @@
 package pov.gate;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -8,18 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
-import pov.business.service.TxnSecurityService;
 import pov.business.txn.Mtwtx001Doc;
 import pov.business.txn.Mtwtx001TxService;
 import pov.channel.DemoApplication;
 import pov.channel.gateservice.account.AccountGate;
-import pov.channel.gateservice.account.AccountGateChecker;
 import pov.channel.gateservice.agreement.AgreementGate;
-import pov.channel.gateservice.agreement.AgreementGateChecker;
-import pov.channel.gateservice.security.SecurityGateChecker;
-import pov.gate.cache.GateCache;
+import pov.channel.gateservice.security.SecurityGete;
 import pov.gate.core.GateException;
-import pov.gate.model.AcctData;
+import pov.gate.model.AccountData;
 import pov.gate.model.AgreementData;
 import pov.gate.model.SecurityData;
 
@@ -29,19 +27,16 @@ import pov.gate.model.SecurityData;
 public class ServiceGateTest {
 
     @Autowired
-    private AccountGate safeAcctService;
+    private AccountGate accountGate;
 
     @Autowired
-    private TxnSecurityService safeSecurityService;
+    private SecurityGete securityGate;
 
     @Autowired
-    private AgreementGate safeAgreementService;
+    private AgreementGate agreementGate;
 
     @Autowired
     private Mtwtx001TxService txService;
-
-    @Autowired
-    private GateCache gateCache;
 
     /**
      * Test method to validate safe data after getting it
@@ -60,14 +55,19 @@ public class ServiceGateTest {
 
             // 使用微前端時會取得資料再寫入暫存區
             // PAGE 1～N
-            AccountGateChecker<AcctData> safeAcctListEntry = safeAcctService.getSafeAcctList();
-            gateCache.addGateData(txDoc.getTxnToken(), safeAcctListEntry);
+            List<AccountData> accountDataList = accountGate.getData(txDoc.getTxnToken());
+            Assertions.assertNotNull(accountDataList);
+            Assertions.assertFalse(accountDataList.isEmpty());
 
-            SecurityGateChecker<SecurityData> safeSecurityListEntry = safeSecurityService.getList();
-            gateCache.addGateData(txDoc.getTxnToken(), safeSecurityListEntry);
+            // PAGE 2
+            List<SecurityData> securityDataList = securityGate.getData(txDoc.getTxnToken());
+            Assertions.assertNotNull(securityDataList);
+            Assertions.assertFalse(securityDataList.isEmpty());
 
-            AgreementGateChecker<AgreementData> safeAgreementListEntry = safeAgreementService.getList();
-            gateCache.addGateData(txDoc.getTxnToken(), safeAgreementListEntry);
+            // PAGE 3
+            List<AgreementData> agreementDatas = agreementGate.getData(txDoc.getTxnToken());
+            Assertions.assertNotNull(agreementDatas);
+            Assertions.assertFalse(agreementDatas.isEmpty());
 
             // 更新交易資料
             // PAGE 1～N
