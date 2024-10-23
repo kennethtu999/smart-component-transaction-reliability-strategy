@@ -22,6 +22,12 @@ public class Txn001Controller {
     @GetMapping("/init")
     @Operation(summary = "init txn001 yyy", description = "init txn001 yyy")
     public void init(@RequestParam("txntoken") String txntoken) throws GateException {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         gateCache.activate(txntoken);
     }
 

@@ -1,7 +1,7 @@
 <script setup>
-// 為表單輸入添加響應式引用
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
 
 const router = useRouter();
 
@@ -10,12 +10,10 @@ const accountIn = ref('');
 const currency = ref('');
 const amount = ref('');
 const comment = ref('');
+const isLoading = ref(true);
+const txntoken = ref('');
 
-// 帳戶和貨幣的模擬數據
-const mockAccountsOut = [
-  { id: 1, name: '支票帳戶' },
-  { id: 2, name: '儲蓄帳戶' },
-];
+const mockAccountsOut = ref([]);
 
 const mockAccountsIn = [
   { id: 3, name: '投資帳戶' },
@@ -53,9 +51,40 @@ const handleSubmit = () => {
 
 // 計算剩餘字符數
 const remainingChars = computed(() => 50 - comment.value.length);
+
+const waitFunction = async () => {
+  txntoken.value = `txn${Math.random().toString(36).substring(2, 15)}`;
+  await fetch(`/api/txn001/init?txntoken=${txntoken.value}`);
+
+  // AccountGate
+  const response = await fetch(`/api/gate/accounts?txntoken=${txntoken.value}`);
+  const accounts = await response.json();
+  console.log(accounts);
+  mockAccountsOut.value = accounts;
+};
+
+// New function to initialize backend data
+const initializeBackend = async () => {
+  try {
+    // Replace this with your actual API call
+    await waitFunction(2000);
+    // After successful initialization, set isLoading to false
+    isLoading.value = false;
+  } catch (error) {
+    console.error('Failed to initialize backend:', error);
+    // Handle error (e.g., show error message to user)
+    isLoading.value = false;
+  }
+};
+
+// Call initializeBackend when the component is mounted
+onMounted(async () => {
+  await initializeBackend();
+});
 </script>
 
 <template>
+  <LoadingSpinner v-if="isLoading" />
   <header class="absolute inset-x-0 top-0">
     <div class="container mx-auto flex justify-end p-4">
       <button
@@ -76,7 +105,7 @@ const remainingChars = computed(() => 50 - comment.value.length);
         <label for="accountOut" class="block mb-2 text-sm font-bold text-gray-700 dark:text-gray-300">轉出帳戶 *</label>
         <select v-model="accountOut" id="accountOut" required class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
           <option value="">選擇轉出帳戶</option>
-          <option v-for="account in mockAccountsOut" :key="account.id" :value="account.id">{{ account.name }}</option>
+          <option v-for="account in mockAccountsOut" :key="account.acctNo" :value="account.acctNo">{{ account.acctName }}</option>
         </select>
       </div>
 
