@@ -2,6 +2,10 @@
 	"folders": [
 		{
 			"path": "backend"
+		},
+{
+			"path": "frontend/webapps",
+			"webapp"
 		}
 	],
 	"settings": {
