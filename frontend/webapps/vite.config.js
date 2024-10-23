@@ -37,6 +37,7 @@ export default ({ mode }) => {
           rewrite: (path) => path.replace(/^\/api/, '/api'),
         },
       },
+      open: true, // This will automatically open the browser when the server starts
     },
   });
 };
